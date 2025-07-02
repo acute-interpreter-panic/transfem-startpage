@@ -16,5 +16,28 @@
         </div>
         <input name="q" type="text" class="grid-item" class="search" placeholder="Search DuckDuckGo :3 :3 :3" />
     </form>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const marqueeElement = document.body;
+            let position = 0;
+            const speed = 1; // Adjust speed here (lower is slower)
+            
+            function animateMarquee() {
+                position -= speed;
+                
+                // Reset position when the image has scrolled completely
+                if (Math.abs(position) >= marqueeElement.offsetWidth) {
+                    position = 0;
+                }
+                
+                marqueeElement.style.backgroundPosition = `${position}px 0`;
+                requestAnimationFrame(animateMarquee);
+            }
+            
+            // Start the animation
+            animateMarquee();
+        });
+    </script>
 </body>
 </html>
