@@ -19,12 +19,9 @@
 
     <script>
         const phrases = [
-            "GirlJuice.Inject()",
-            "Child.CrowdKill()",
-            "CopCar.Burn()",
-            "You.Cute = true",
-            "You.Gay = true",
-            "Nazi.Punch()",
+            {{range $Phrase := .HeaderPhrases }}
+            "{{ $Phrase }}",
+            {{- end }}
         ]
 
         Array.from(document.querySelectorAll(".phrases")).forEach(element => {
