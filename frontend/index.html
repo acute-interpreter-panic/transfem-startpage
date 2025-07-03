@@ -11,13 +11,27 @@
     <form class="search-grid" action="https://duckduckgo.com/">
         <div class="search-logo">
             <img als="girl_juice" src="assets/girl_juice.png" />
-            <h2>GirlJuice.Inject()</h2>
+            <h2 class="phrases">GirlJuice.Inject()</h2>
             <img als="girl_juice" src="assets/girl_juice.png" />
         </div>
         <input name="q" type="text" class="grid-item" class="search" placeholder="Search DuckDuckGo :3 :3 :3" />
     </form>
 
     <script>
+        const phrases = [
+            "GirlJuice.Inject()",
+            "Child.CrowdKill()",
+            "CopCar.Burn()",
+            "You.Cute = true",
+            "You.Gay = true",
+            "Nazi.Punch()",
+        ]
+
+        Array.from(document.querySelectorAll(".phrases")).forEach(element => {
+            console.log(element)
+            element.textContent = phrases[Math.floor(Math.random()*phrases.length)];
+        })
+
         document.addEventListener('DOMContentLoaded', function() {
             const marqueeElement = document.body;
             let position = 0;

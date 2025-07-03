@@ -6,7 +6,6 @@ body {
     margin: 0;
     height: 100vh;
 
-    padding: 5em;
     padding-left: auto;
     padding-right: auto;
     background-color: pink;
@@ -47,6 +46,12 @@ body {
     justify-content:    space-between;
 
     color: black;
+}
+
+@media (min-height: 700px){
+    .search-grid {
+        margin-top: 0;
+    }
 }
 
 .search-logo img {
