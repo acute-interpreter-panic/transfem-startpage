@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NewTab</title>
+    <title>{{ .PageTitle }}</title>
 
     <link rel="stylesheet" type="text/css" href="assets/style.css">
 </head>
@@ -11,7 +11,7 @@
     <form class="search-grid" action="https://duckduckgo.com/">
         <div class="search-logo">
             <img als="girl_juice" src="assets/girl_juice.png" />
-            <h2 class="phrases">GirlJuice.Inject()</h2>
+            <h2 class="phrases"></h2>
             <img als="girl_juice" src="assets/girl_juice.png" />
         </div>
         <input name="q" type="text" class="grid-item" class="search" placeholder="Search DuckDuckGo :3 :3 :3" />
@@ -28,7 +28,7 @@
         ]
 
         Array.from(document.querySelectorAll(".phrases")).forEach(element => {
-            element.textContent = phrases[Math.floor(Math.random()*phrases.length)];
+            // element.textContent = phrases[Math.floor(Math.random()*phrases.length)];
         })
 
         document.addEventListener('DOMContentLoaded', function() {
