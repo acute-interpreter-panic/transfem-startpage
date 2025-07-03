@@ -3,13 +3,13 @@ package main
 import (
 	"fmt"
 
-	"gitea.elara.ws/Hazel/transfem-startpage/backend"
+	"gitea.elara.ws/Hazel/transfem-startpage/internal/diyhrt"
 )
 
 func main() {
 	fmt.Println("running transfem startpage")
 
-	listings, err := backend.GetListings()
+	listings, err := diyhrt.GetListings()
 	if err != nil {
 		fmt.Println(err)
 		return

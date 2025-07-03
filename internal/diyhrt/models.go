@@ -1,4 +1,4 @@
-package backend
+package diyhrt
 
 type ActiveIngredient struct {
 	Name        string `json:"name"`

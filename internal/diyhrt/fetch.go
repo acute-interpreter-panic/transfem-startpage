@@ -1,4 +1,4 @@
-package backend
+package diyhrt
 
 import (
 	"encoding/json"
