@@ -41,7 +41,11 @@ func getIndex(c echo.Context) error {
 
 func main() {
 	fmt.Println("running transfem startpage")
-	FetchDiyHrt()
+	err := FetchDiyHrt()
+	if err != nil {
+		fmt.Println(err)
+	}
+	fmt.Println(CurrentRenderingConfig.Stores)
 
 	e := echo.New()
 	e.Static("/assets", "frontend/assets")

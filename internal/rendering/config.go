@@ -1,6 +1,8 @@
 package rendering
 
 import (
+	"fmt"
+
 	"gitea.elara.ws/Hazel/transfem-startpage/internal/diyhrt"
 )
 
@@ -42,6 +44,7 @@ func (rc *RenderingConfig) LoadDiyHrt(listings []diyhrt.Listing) {
 	stores := make([]diyhrt.Store, 0)
 
 	for _, listing := range listings {
+		fmt.Println(listing)
 		if _, ok := existingStores[listing.Store.Id]; ok {
 			continue
 		}
