@@ -11,6 +11,15 @@ import (
 
 var CurrentRenderingConfig = rendering.DefaultRenderingConfig()
 
+func setConfig(c echo.Context) error {
+	err := c.Bind(&CurrentRenderingConfig)
+	if err != nil {
+		return c.String(http.StatusBadRequest, err.Error())
+	}
+
+	return c.String(http.StatusOK, "OK")
+}
+
 func getIndex(c echo.Context) error {
 	var tpl bytes.Buffer
 	rendering.IndexTemplate.Execute(&tpl, CurrentRenderingConfig)
@@ -24,6 +33,9 @@ func main() {
 	e := echo.New()
 	e.Static("/assets", "frontend/assets")
 	e.GET("/", getIndex)
+
+	// this is for me to later setup the ctl such that I can config the running program on the command line
+	e.POST("/api/config", setConfig)
 
 	e.Logger.Fatal(e.Start(":5500"))
 }
