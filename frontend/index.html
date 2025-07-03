@@ -28,7 +28,6 @@
         ]
 
         Array.from(document.querySelectorAll(".phrases")).forEach(element => {
-            console.log(element)
             element.textContent = phrases[Math.floor(Math.random()*phrases.length)];
         })
 
