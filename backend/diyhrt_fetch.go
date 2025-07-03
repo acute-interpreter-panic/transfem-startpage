@@ -11,7 +11,6 @@ const endpoint = "https://diyhrt.market/api/listings"
 
 func GetListings() ([]Listing, error) {
 	apiKey := os.Getenv("API_KEY")
-	fmt.Println(apiKey)
 
 	// why put api key in url parameter
 	resp, err := http.NewRequest("GET", endpoint+"?api_token="+apiKey, nil)
