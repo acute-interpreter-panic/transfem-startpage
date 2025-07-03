@@ -5,11 +5,23 @@ import (
 	"fmt"
 	"net/http"
 
+	"gitea.elara.ws/Hazel/transfem-startpage/internal/diyhrt"
 	"gitea.elara.ws/Hazel/transfem-startpage/internal/rendering"
 	"github.com/labstack/echo/v4"
 )
 
 var CurrentRenderingConfig = rendering.DefaultRenderingConfig()
+
+func FetchDiyHrt() error {
+	fmt.Println("Fetch DiyHrt Marketplaces...")
+
+	l, err := diyhrt.GetListings()
+	if err != nil {
+		return err
+	}
+	CurrentRenderingConfig.LoadDiyHrt(l)
+	return nil
+}
 
 func setConfig(c echo.Context) error {
 	err := c.Bind(&CurrentRenderingConfig)
@@ -29,6 +41,7 @@ func getIndex(c echo.Context) error {
 
 func main() {
 	fmt.Println("running transfem startpage")
+	FetchDiyHrt()
 
 	e := echo.New()
 	e.Static("/assets", "frontend/assets")

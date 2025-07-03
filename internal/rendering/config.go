@@ -1,6 +1,8 @@
 package rendering
 
-import "reflect"
+import (
+	"gitea.elara.ws/Hazel/transfem-startpage/internal/diyhrt"
+)
 
 type RenderingConfig struct {
 	HeaderPhrases     []string
@@ -10,6 +12,9 @@ type RenderingConfig struct {
 	SearchPlaceholder string
 	SearchFormAction  string
 	SearchInputName   string
+
+	Listings []diyhrt.Listing
+	Stores   []diyhrt.Store
 }
 
 func DefaultRenderingConfig() RenderingConfig {
@@ -32,11 +37,18 @@ func DefaultRenderingConfig() RenderingConfig {
 	}
 }
 
-func (rc *RenderingConfig) Set(key string, value string) {
-	// https://gist.github.com/kilfu0701/77c614386483782f68bc5538b6100730
-	r := reflect.ValueOf(rc)
-	f := reflect.Indirect(r).FieldByName(key)
-	if f.Kind() != reflect.Invalid {
-		f.SetString(value)
+func (rc *RenderingConfig) LoadDiyHrt(listings []diyhrt.Listing) {
+	existingStores := make(map[int]struct{})
+	stores := make([]diyhrt.Store, 0)
+
+	for _, listing := range listings {
+		if _, ok := existingStores[listing.Store.Id]; ok {
+			continue
+		}
+
+		stores = append(stores, listing.Store)
 	}
+
+	rc.Listings = listings
+	rc.Stores = stores
 }
