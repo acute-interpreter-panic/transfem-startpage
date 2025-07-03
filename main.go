@@ -9,7 +9,8 @@ import (
 func main() {
 	fmt.Println("running transfem startpage")
 
-	for _, l := range backend.GetListings() {
+	listings, _ := backend.GetListings()
+	for _, l := range listings {
 		fmt.Println(l)
 	}
 }

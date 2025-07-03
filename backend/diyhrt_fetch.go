@@ -1,6 +1,7 @@
 package backend
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/http"
 	"os"
@@ -8,19 +9,22 @@ import (
 
 const endpoint = "https://diyhrt.market/api/listings"
 
-func GetListings() []Listing {
+func GetListings() ([]Listing, error) {
 	apiKey := os.Getenv("API_KEY")
 	fmt.Println(apiKey)
 
 	// why put api key in url parameter
-	req, err := http.NewRequest("GET", endpoint+"?api_token="+apiKey, nil)
+	resp, err := http.NewRequest("GET", endpoint+"?api_token="+apiKey, nil)
 
 	if err != nil {
 		fmt.Print(err.Error())
-		return []Listing{}
+		return []Listing{}, err
 	}
 
-	fmt.Println(req.Body.Read())
+	var listings []Listing
+	if err := json.NewDecoder(resp.Body).Decode(&listings); err != nil {
+		return []Listing{}, err
+	}
 
-	return []Listing{}
+	return listings, nil
 }
