@@ -8,13 +8,13 @@
     <link rel="stylesheet" type="text/css" href="assets/style.css">
 </head>
 <body>
-    <form class="search-grid" action="https://duckduckgo.com/">
+    <form class="search-grid" action="{{ .SearchFormAction }}">
         <div class="search-logo">
             <img als="girl_juice" src="assets/girl_juice.png" />
             <h2 class="phrases"></h2>
             <img als="girl_juice" src="assets/girl_juice.png" />
         </div>
-        <input name="q" type="text" class="grid-item" class="search" placeholder="Search DuckDuckGo :3 :3 :3" />
+        <input name="{{ .SearchInputName }}" type="text" class="grid-item" class="search" placeholder="{{ .SearchPlaceholder }}" />
     </form>
 
     <script>
@@ -25,23 +25,29 @@
         ]
 
         Array.from(document.querySelectorAll(".phrases")).forEach(element => {
-            // element.textContent = phrases[Math.floor(Math.random()*phrases.length)];
+            element.textContent = phrases[Math.floor(Math.random()*phrases.length)];
         })
 
         document.addEventListener('DOMContentLoaded', function() {
             const marqueeElement = document.body;
-            let position = 0;
-            const speed = 1; // Adjust speed here (lower is slower)
-            
+            let xPosition = 0;
+            let yPosition = 0;
+            const xSpeed = {{ .BackgroundScrollX }}; // Adjust speed here (lower is slower)
+            const ySpeed = {{ .BackgroundScrollY }};
+
             function animateMarquee() {
-                position -= speed;
+                xPosition -= xSpeed;
+                yPosition -= ySpeed;
                 
                 // Reset position when the image has scrolled completely
-                if (Math.abs(position) >= marqueeElement.offsetWidth) {
-                    position = 0;
+                if (Math.abs(xPosition) >= marqueeElement.offsetWidth) {
+                    xPosition = 0;
+                }
+                if (Math.abs(yPosition) >= marqueeElement.offsetHeight) {
+                    yPosition = 0;
                 }
                 
-                marqueeElement.style.backgroundPosition = `${position}px 0`;
+                marqueeElement.style.backgroundPosition = `${xPosition}px ${yPosition}px`;
                 requestAnimationFrame(animateMarquee);
             }
             
