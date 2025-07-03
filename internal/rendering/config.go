@@ -1,9 +1,11 @@
 package rendering
 
+import "reflect"
+
 type RenderingConfig struct {
 	HeaderPhrases     []string
-	BackgroundScrollX float32
-	BackgroundScrollY float32
+	BackgroundScrollX string
+	BackgroundScrollY string
 	PageTitle         string
 	SearchPlaceholder string
 	SearchFormAction  string
@@ -21,11 +23,20 @@ func DefaultRenderingConfig() RenderingConfig {
 			"Nazi.Punch()",
 			"Dolls.GiveGuns()",
 		},
-		BackgroundScrollX: 1,
-		BackgroundScrollY: 0,
+		BackgroundScrollX: "1",
+		BackgroundScrollY: "0",
 		PageTitle:         "TransRights",
 		SearchPlaceholder: "Search on DuckDuckGo",
 		SearchFormAction:  "https://duckduckgo.com/",
 		SearchInputName:   "q",
+	}
+}
+
+func (rc *RenderingConfig) Set(key string, value string) {
+	// https://gist.github.com/kilfu0701/77c614386483782f68bc5538b6100730
+	r := reflect.ValueOf(rc)
+	f := reflect.Indirect(r).FieldByName(key)
+	if f.Kind() != reflect.Invalid {
+		f.SetString(value)
 	}
 }
