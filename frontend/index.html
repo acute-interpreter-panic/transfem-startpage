@@ -30,16 +30,21 @@
                 {{- end }}
             ]
 
-            function putString(element, s, i) {
+            function setTitle(element, s, i) {
               i++
               element.textContent = s.substring(0, i)
 
               if (i >=s.length) return;
-              setTimeout(() => putString(element, s, i), 100);
+              setTimeout(() => setTitle(element, s, i), 100);
+            }
+
+            function titleChanger(element) {
+              setTitle(element, phrases[Math.floor(Math.random()*phrases.length)], 0);
+              setTimeout(() => titleChanger(element), 10000);
             }
 
             Array.from(document.querySelectorAll(".phrases")).forEach(element => {
-              putString(element, phrases[Math.floor(Math.random()*phrases.length)], 0)
+              titleChanger(element);
             })
 
             document.addEventListener('DOMContentLoaded', function() {
