@@ -1,68 +1,65 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ .PageTitle }}</title>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>{{ .PageTitle }}</title>
 
-    <link rel="stylesheet" type="text/css" href="assets/style.css">
-</head>
-<body>
-    <form class="search-grid" action="{{ .SearchFormAction }}">
-        <div class="search-logo">
-            <img als="girl_juice" src="assets/girl_juice.png" />
-            <h2 class="phrases"></h2>
-            <img als="girl_juice" src="assets/girl_juice.png" />
-        </div>
-        <input name="{{ .SearchInputName }}" type="text" class="grid-item" class="search" placeholder="{{ .SearchPlaceholder }}" />
-    
-        <div class="store-cards">
-            {{range $Store := .Stores }}
-            <a target="_blank" href="{{ $Store.Url }}" class="card">
-                <h3>{{ $Store.Name }}</h3>
-                <p>{{ $Store.Description }}</p>
-            </a>
-            {{- end }}
-        </div>
-    </form>
+        <link rel="stylesheet" type="text/css" href="assets/style.css" />
+    </head>
+    <body>
+        <form class="search-grid" action="{{ .SearchFormAction }}">
+            <div class="search-logo">
+                <img als="girl_juice" src="assets/girl_juice.png" />
+                <h2 class="phrases"></h2>
+                <img als="girl_juice" src="assets/girl_juice.png" />
+            </div>
+            <input
+                name="{{ .SearchInputName }}"
+                type="text"
+                class="grid-item"
+                class="search"
+                placeholder="{{ .SearchPlaceholder }}"
+            />
+        </form>
 
-    <script>
-        const phrases = [
-            {{range $Phrase := .HeaderPhrases }}
-            "{{ $Phrase }}",
-            {{- end }}
-        ]
+        <script>
+            const phrases = [
+                {{range $Phrase := .HeaderPhrases }}
+                "{{ $Phrase }}",
+                {{- end }}
+            ]
 
-        Array.from(document.querySelectorAll(".phrases")).forEach(element => {
-            element.textContent = phrases[Math.floor(Math.random()*phrases.length)];
-        })
+            Array.from(document.querySelectorAll(".phrases")).forEach(element => {
+                element.textContent = phrases[Math.floor(Math.random()*phrases.length)];
+            })
 
-        document.addEventListener('DOMContentLoaded', function() {
-            const marqueeElement = document.body;
-            let xPosition = 0;
-            let yPosition = 0;
-            const xSpeed = {{ .BackgroundScrollX }}; // Adjust speed here (lower is slower)
-            const ySpeed = {{ .BackgroundScrollY }};
+            document.addEventListener('DOMContentLoaded', function() {
+                const marqueeElement = document.body;
+                let xPosition = 0;
+                let yPosition = 0;
+                const xSpeed = {{ .BackgroundScrollX }}; // Adjust speed here (lower is slower)
+                const ySpeed = {{ .BackgroundScrollY }};
 
-            function animateMarquee() {
-                xPosition -= xSpeed;
-                yPosition -= ySpeed;
-                
-                // Reset position when the image has scrolled completely
-                if (Math.abs(xPosition) >= marqueeElement.offsetWidth) {
-                    xPosition = 0;
+                function animateMarquee() {
+                    xPosition -= xSpeed;
+                    yPosition -= ySpeed;
+
+                    // Reset position when the image has scrolled completely
+                    if (Math.abs(xPosition) >= marqueeElement.offsetWidth) {
+                        xPosition = 0;
+                    }
+                    if (Math.abs(yPosition) >= marqueeElement.offsetHeight) {
+                        yPosition = 0;
+                    }
+
+                    marqueeElement.style.backgroundPosition = `${xPosition}px ${yPosition}px`;
+                    requestAnimationFrame(animateMarquee);
                 }
-                if (Math.abs(yPosition) >= marqueeElement.offsetHeight) {
-                    yPosition = 0;
-                }
-                
-                marqueeElement.style.backgroundPosition = `${xPosition}px ${yPosition}px`;
-                requestAnimationFrame(animateMarquee);
-            }
-            
-            // Start the animation
-            animateMarquee();
-        });
-    </script>
-</body>
+
+                // Start the animation
+                animateMarquee();
+            });
+        </script>
+    </body>
 </html>
