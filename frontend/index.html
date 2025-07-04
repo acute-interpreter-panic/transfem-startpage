@@ -30,8 +30,16 @@
                 {{- end }}
             ]
 
+            function putString(element, s, i) {
+              i++
+              element.textContent = s.substring(0, i)
+
+              if (i >=s.length) return;
+              setTimeout(() => putString(element, s, i), 100);
+            }
+
             Array.from(document.querySelectorAll(".phrases")).forEach(element => {
-                element.textContent = phrases[Math.floor(Math.random()*phrases.length)];
+              putString(element, phrases[Math.floor(Math.random()*phrases.length)], 0)
             })
 
             document.addEventListener('DOMContentLoaded', function() {
