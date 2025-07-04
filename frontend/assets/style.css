@@ -49,9 +49,13 @@ body {
     color: black;
 }
 
-@media (min-height: 700px) {
+@media (max-height: 300px) {
     .search-grid {
-        margin-top: 0;
+        grid-template-rows: 4em;
+    }
+
+    .search-logo {
+        display: none;
     }
 }
 
