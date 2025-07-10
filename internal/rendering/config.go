@@ -22,13 +22,13 @@ type RenderingConfig struct {
 func DefaultRenderingConfig() RenderingConfig {
 	return RenderingConfig{
 		HeaderPhrases: []string{
-			"GirlJuice.Inject()",
-			"Child.CrowdKill()",
-			"CopCar.Burn()",
-			"You.Cute = true",
-			"You.Gay = true",
-			"Nazi.Punch()",
-			"Dolls.GiveGuns()",
+			"GirlJuice.Inject();",
+			"Child.CrowdKill();",
+			"CopCar.Burn();",
+			"You.Cute = true;",
+			"You.Gay = true;",
+			"Nazi.Punch();",
+			"Dolls.GiveGuns();",
 		},
 		BackgroundScrollX: "1",
 		BackgroundScrollY: "0",
