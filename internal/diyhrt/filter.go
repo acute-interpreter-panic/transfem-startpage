@@ -1,7 +1,6 @@
 package diyhrt
 
 import (
-	"fmt"
 	"slices"
 )
 
@@ -10,6 +9,8 @@ type StoreFilter struct{
 
     IncludeIds []int
     ExcludeIds []int
+
+    ShipsTo []string
 }
 
 
@@ -33,10 +34,8 @@ func (f StoreFilter) Filter (stores []Store) []Store {
             continue
         }
 
-
         result = append(result, s)
     }
 
-    fmt.Println(len(result))
     return  result
 }

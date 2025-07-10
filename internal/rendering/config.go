@@ -2,6 +2,7 @@ package rendering
 
 import (
 	"gitea.elara.ws/Hazel/transfem-startpage/internal/diyhrt"
+	"fmt"
 )
 
 type RenderingConfig struct {
@@ -52,6 +53,7 @@ func (rc *RenderingConfig) LoadDiyHrt(listings []diyhrt.Listing) {
 			continue
 		}
 
+		fmt.Println(listing.Store.ShipsToCountry)
 		stores = append(stores, listing.Store)
 	}
 
