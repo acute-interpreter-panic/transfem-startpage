@@ -83,6 +83,8 @@ body {
     color: black;
     gap: 1em;
     padding: 1em;
+
+    border-radius: 1em;
 }
 
 #listings .card {
