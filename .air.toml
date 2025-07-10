@@ -1,0 +1,15 @@
+# .air.toml
+root = "."
+tmp_dir = "tmp"
+
+[build]
+  bin = "/tmp/new_tab"
+  cmd = "go build -o /tmp/new_tab main.go"
+  include = ["*.go", "*.html", "*.css"]
+  exclude = ["tmp", "vendor"]
+
+[color]
+  main = "yellow"
+  watcher = "cyan"
+  build = "green"
+  log = "white"
