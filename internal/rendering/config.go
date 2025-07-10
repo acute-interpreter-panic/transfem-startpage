@@ -1,8 +1,10 @@
 package rendering
 
 import (
+	"maps"
+	"slices"
+
 	"gitea.elara.ws/Hazel/transfem-startpage/internal/diyhrt"
-	"fmt"
 )
 
 type RenderingConfig struct {
@@ -40,23 +42,18 @@ func DefaultRenderingConfig() RenderingConfig {
 
 		StoreFilter: diyhrt.StoreFilter{
 			Limit: 4,
+			IncludeIds: []int{7},
 		},
 	}
 }
 
 func (rc *RenderingConfig) LoadDiyHrt(listings []diyhrt.Listing) {
-	existingStores := make(map[int]struct{})
-	stores := make([]diyhrt.Store, 0)
+	existingStores := make(map[int]diyhrt.Store)
 
 	for _, listing := range listings {
-		if _, ok := existingStores[listing.Store.Id]; ok {
-			continue
-		}
-
-		fmt.Println(listing.Store.ShipsToCountry)
-		stores = append(stores, listing.Store)
+		existingStores[listing.Store.Id] = listing.Store
 	}
 
 	rc.Listings = listings
-	rc.Stores = rc.StoreFilter.Filter(stores)
+	rc.Stores = rc.StoreFilter.Filter(slices.Collect(maps.Values(existingStores)))
 }
