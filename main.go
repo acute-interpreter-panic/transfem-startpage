@@ -45,7 +45,6 @@ func main() {
 	if err != nil {
 		fmt.Println(err)
 	}
-	fmt.Println(CurrentRenderingConfig.Stores)
 
 	e := echo.New()
 	e.Static("/assets", "frontend/assets")

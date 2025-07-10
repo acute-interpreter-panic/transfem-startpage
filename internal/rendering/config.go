@@ -1,8 +1,6 @@
 package rendering
 
 import (
-	"fmt"
-
 	"gitea.elara.ws/Hazel/transfem-startpage/internal/diyhrt"
 )
 
@@ -14,6 +12,8 @@ type RenderingConfig struct {
 	SearchPlaceholder string
 	SearchFormAction  string
 	SearchInputName   string
+
+	StoreFilter diyhrt.StoreFilter
 
 	Listings []diyhrt.Listing
 	Stores   []diyhrt.Store
@@ -36,6 +36,10 @@ func DefaultRenderingConfig() RenderingConfig {
 		SearchPlaceholder: "Search on DuckDuckGo",
 		SearchFormAction:  "https://duckduckgo.com/",
 		SearchInputName:   "q",
+
+		StoreFilter: diyhrt.StoreFilter{
+			Limit: 5,
+		},
 	}
 }
 
@@ -44,7 +48,6 @@ func (rc *RenderingConfig) LoadDiyHrt(listings []diyhrt.Listing) {
 	stores := make([]diyhrt.Store, 0)
 
 	for _, listing := range listings {
-		fmt.Println(listing)
 		if _, ok := existingStores[listing.Store.Id]; ok {
 			continue
 		}
@@ -53,5 +56,5 @@ func (rc *RenderingConfig) LoadDiyHrt(listings []diyhrt.Listing) {
 	}
 
 	rc.Listings = listings
-	rc.Stores = stores
+	rc.Stores = rc.StoreFilter.Filter(stores)
 }

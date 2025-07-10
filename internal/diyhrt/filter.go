@@ -1,6 +1,9 @@
 package diyhrt
 
-import "slices"
+import (
+	"fmt"
+	"slices"
+)
 
 type StoreFilter struct{
     Limit int
@@ -34,5 +37,6 @@ func (f StoreFilter) Filter (stores []Store) []Store {
         result = append(result, s)
     }
 
+    fmt.Println(len(result))
     return  result
 }
