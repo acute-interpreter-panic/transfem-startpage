@@ -25,7 +25,7 @@
 
             <div class="cards" id="listings">
                 {{range $Listing := .Listings }}
-                <a target="_blank" href="{{ $Listing.Url }}" class="card">
+                <a target="_blank" href="{{ $Listing.Url }}" class="card {{ if $Listing.InStock }}in-stock{{ end }}">
                     <h3>{{ $Listing.ProductName }}</h3>
                     <p>{{ $Listing.StoreName }} - {{ $Listing.Price }}</p>
                 </a>

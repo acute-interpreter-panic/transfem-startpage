@@ -85,6 +85,15 @@ body {
     padding: 1em;
 }
 
+#listings .card {
+    background-color: rgba(255, 0, 0, 0.5);
+}
+
+#listings .in-stock {
+    background-color: rgba(125, 255, 125, 0.5);
+}
+
+
 .card-image {
     width: 100%;
     aspect-ratio: 1/1;
