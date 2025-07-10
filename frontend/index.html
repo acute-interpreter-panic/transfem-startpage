@@ -15,10 +15,19 @@
             </div>
             <input name="{{ .SearchInputName }}" type="text" class="grid-item" class="search" placeholder="{{ .SearchPlaceholder }}" />
 
-            <div class="store-cards">
+            <div class="cards" id="stores">
                 {{range $Store := .Stores }}
                 <a target="_blank" href="{{ $Store.Url }}" class="card">
                     <h3>{{ $Store.Name }}</h3>
+                </a>
+                {{- end }}
+            </div>
+
+            <div class="cards" id="listings">
+                {{range $Listing := .Listings }}
+                <a target="_blank" href="{{ $Listing.Url }}" class="card">
+                    <h3>{{ $Listing.ProductName }}</h3>
+                    <p>{{ $Listing.StoreName }} - {{ $Listing.Price }}</p>
                 </a>
                 {{- end }}
             </div>

@@ -59,7 +59,7 @@ body {
     }
 }
 
-.store-cards {
+.cards {
     height: 100%;
     width: 100%;
     display: flex;
@@ -68,6 +68,10 @@ body {
     flex-wrap: wrap;
     gap: 1em;
     overflow: auto;
+}
+
+#stores {
+    display: none;
 }
 
 .card {
