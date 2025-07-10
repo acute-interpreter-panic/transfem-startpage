@@ -38,7 +38,7 @@ func DefaultRenderingConfig() RenderingConfig {
 		SearchInputName:   "q",
 
 		StoreFilter: diyhrt.StoreFilter{
-			Limit: 5,
+			Limit: 4,
 		},
 	}
 }
