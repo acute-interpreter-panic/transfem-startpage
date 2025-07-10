@@ -17,6 +17,7 @@ type RenderingConfig struct {
 	SearchInputName   string
 
 	StoreFilter diyhrt.StoreFilter
+	ListingFilter diyhrt.ListingFilter
 
 	Listings []diyhrt.Listing
 	Stores   []diyhrt.Store
@@ -44,6 +45,10 @@ func DefaultRenderingConfig() RenderingConfig {
 			Limit: 0,
 			IncludeIds: []int{7},
 		},
+
+		ListingFilter: diyhrt.ListingFilter{
+			FromStores: []int{7},
+		},
 	}
 }
 
@@ -54,6 +59,6 @@ func (rc *RenderingConfig) LoadDiyHrt(listings []diyhrt.Listing) {
 		existingStores[listing.Store.Id] = listing.Store
 	}
 
-	rc.Listings = listings
+	rc.Listings = rc.ListingFilter.Filter(listings)
 	rc.Stores = rc.StoreFilter.Filter(slices.Collect(maps.Values(existingStores)))
 }
