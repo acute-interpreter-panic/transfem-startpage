@@ -1,12 +1,16 @@
 package rendering
 
 import (
+	"errors"
+	"fmt"
 	"maps"
 	"os"
+	"path/filepath"
 	"slices"
 
-	"github.com/pelletier/go-toml"
 	"gitea.elara.ws/Hazel/transfem-startpage/internal/diyhrt"
+	"github.com/kirsle/configdir"
+	"github.com/pelletier/go-toml"
 )
 
 type RenderingConfig struct {
@@ -65,9 +69,36 @@ func (rc *RenderingConfig) LoadDiyHrt(listings []diyhrt.Listing) {
 	rc.Stores = rc.StoreFilter.Filter(slices.Collect(maps.Values(existingStores)))
 }
 
-func (rc *RenderingConfig) LoadConfigFile(file string) error {
+
+func (rc *RenderingConfig) ScanForConfigFile(profile string) error {
+	profileFile := profile + ".toml"
+
+	configPath := configdir.LocalConfig("startpage")
+	configFile := filepath.Join(configPath, profileFile)
+
+	if err := rc.LoadConfigFile(configFile); !errors.Is(err, os.ErrNotExist) {
+		return err
+	}
+
+	if err := rc.LoadConfigFile(profileFile); !errors.Is(err, os.ErrNotExist) {
+		return err
+	}
+
+	if err := rc.LoadConfigFile("." + profileFile); !errors.Is(err, os.ErrNotExist) {
+		return err
+	}
+
+	return errors.New("No config file found")
+}
 
 func (rc *RenderingConfig) LoadConfigFile(file string) error {
+	if _, err := os.Stat(file); err != nil {
+		return err
+	}
+
+	fmt.Println("loading config file: " + file)
+
+
 	content, err := os.ReadFile(file)
 
 	if err != nil {
