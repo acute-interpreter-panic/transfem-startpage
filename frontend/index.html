@@ -14,7 +14,7 @@
                 <img als="girl_juice" src="assets/girl_juice.png" />
             </div>
 
-            <input id="search-input" name="{{ .SearchInputName }}" type="text" class="grid-item" class="search" placeholder="{{ .SearchPlaceholder }}" />
+            <input id="search-input" name="{{ .SearchInputName }}" type="text" class="grid-item" class="search" placeholder="{{ .SearchPlaceholder }}" autocomplete="off" />
 
             <div class="cards" id="stores">
                 {{range $Store := .Stores }}
