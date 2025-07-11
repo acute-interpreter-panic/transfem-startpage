@@ -13,6 +13,7 @@
                 <h2 class="phrases"></h2>
                 <img als="girl_juice" src="assets/girl_juice.png" />
             </div>
+
             <input name="{{ .SearchInputName }}" type="text" class="grid-item" class="search" placeholder="{{ .SearchPlaceholder }}" />
 
             <div class="cards" id="stores">
@@ -54,8 +55,16 @@
             }
 
             Array.from(document.querySelectorAll(".phrases")).forEach(element => {
-              titleChanger(element);
+                titleChanger(element);
             })
+
+
+            document.addEventListener('DOMContentLoaded', function() {
+                Array.from(document.querySelectorAll('input')).forEach(element => {
+                    console.log(element)
+                    element.focus();
+                })
+            });
 
             document.addEventListener('DOMContentLoaded', function() {
                 const marqueeElement = document.body;
