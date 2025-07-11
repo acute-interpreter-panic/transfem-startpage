@@ -7,14 +7,14 @@
         <link rel="stylesheet" type="text/css" href="assets/style.css">
     </head>
     <body>
-        <form class="search-grid" action="{{ .SearchFormAction }}">
+        <form id="search-form" class="search-grid" action="{{ .SearchFormAction }}">
             <div class="search-logo">
                 <img als="girl_juice" src="assets/girl_juice.png" />
                 <h2 class="phrases"></h2>
                 <img als="girl_juice" src="assets/girl_juice.png" />
             </div>
 
-            <input name="{{ .SearchInputName }}" type="text" class="grid-item" class="search" placeholder="{{ .SearchPlaceholder }}" />
+            <input id="search-input" name="{{ .SearchInputName }}" type="text" class="grid-item" class="search" placeholder="{{ .SearchPlaceholder }}" />
 
             <div class="cards" id="stores">
                 {{range $Store := .Stores }}
