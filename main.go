@@ -48,6 +48,7 @@ func main() {
 
 	e := echo.New()
 	e.Static("/assets", "frontend/assets")
+	e.Static("/scripts", "frontend/scripts")
 	e.GET("/", getIndex)
 
 	// this is for me to later setup the ctl such that I can config the running program on the command line
