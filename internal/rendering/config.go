@@ -98,16 +98,11 @@ func (rc *RenderingConfig) LoadConfigFile(file string) error {
 
 	fmt.Println("loading config file: " + file)
 
-
 	content, err := os.ReadFile(file)
 
 	if err != nil {
 		return err
 	}
 
-	err = toml.Unmarshal(content, rc)
-	if err != nil {
-		return err
-    }
-	return nil
+	return  toml.Unmarshal(content, rc)
 }
