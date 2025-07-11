@@ -66,6 +66,8 @@ func (rc *RenderingConfig) LoadDiyHrt(listings []diyhrt.Listing) {
 }
 
 func (rc *RenderingConfig) LoadConfigFile(file string) error {
+
+func (rc *RenderingConfig) LoadConfigFile(file string) error {
 	content, err := os.ReadFile(file)
 
 	if err != nil {
