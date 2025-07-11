@@ -4,13 +4,17 @@ import (
 	"bytes"
 	"fmt"
 	"net/http"
+	"os"
+	"strconv"
 
 	"gitea.elara.ws/Hazel/transfem-startpage/internal/diyhrt"
 	"gitea.elara.ws/Hazel/transfem-startpage/internal/rendering"
 	"github.com/labstack/echo/v4"
 )
 
-var CurrentRenderingConfig = rendering.DefaultRenderingConfig()
+
+var CurrentConfig = rendering.NewConfig()
+
 
 func FetchDiyHrt() error {
 	fmt.Println("Fetch DiyHrt Marketplaces...")
@@ -19,22 +23,13 @@ func FetchDiyHrt() error {
 	if err != nil {
 		return err
 	}
-	CurrentRenderingConfig.LoadDiyHrt(l)
+	CurrentConfig.Template.LoadDiyHrt(l)
 	return nil
-}
-
-func setConfig(c echo.Context) error {
-	err := c.Bind(&CurrentRenderingConfig)
-	if err != nil {
-		return c.String(http.StatusBadRequest, err.Error())
-	}
-
-	return c.String(http.StatusOK, "OK")
 }
 
 func getIndex(c echo.Context) error {
 	var tpl bytes.Buffer
-	rendering.IndexTemplate.Execute(&tpl, CurrentRenderingConfig)
+	rendering.IndexTemplate.Execute(&tpl, CurrentConfig.Template)
 
 	return c.HTML(http.StatusOK, tpl.String())
 }
@@ -42,9 +37,18 @@ func getIndex(c echo.Context) error {
 func main() {
 	fmt.Println("running transfem startpage")
 
-	CurrentRenderingConfig.ScanForConfigFile("startpage")
+	profile := "startpage"
+	if len(os.Args) > 1 {
+		profile = os.Args[1]
+	}
+	fmt.Println("loading profile " + profile + "...")
 
-	err := FetchDiyHrt()
+	err := CurrentConfig.ScanForConfigFile(profile)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	err = FetchDiyHrt()
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -54,8 +58,5 @@ func main() {
 	e.Static("/scripts", "frontend/scripts")
 	e.GET("/", getIndex)
 
-	// this is for me to later setup the ctl such that I can config the running program on the command line
-	e.POST("/api/config", setConfig)
-
-	e.Logger.Fatal(e.Start(":5500"))
+	e.Logger.Fatal(e.Start(":" + strconv.Itoa(CurrentConfig.Server.Port)))
 }

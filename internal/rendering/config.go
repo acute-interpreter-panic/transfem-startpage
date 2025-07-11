@@ -13,7 +13,11 @@ import (
 	"github.com/pelletier/go-toml"
 )
 
-type RenderingConfig struct {
+type ServerConfig struct {
+	Port int
+}
+
+type TemplateConfig struct {
 	HeaderPhrases     []string
 	BackgroundScrollX string
 	BackgroundScrollY string
@@ -29,36 +33,46 @@ type RenderingConfig struct {
 	Stores   []diyhrt.Store
 }
 
-func DefaultRenderingConfig() RenderingConfig {
-	return RenderingConfig{
-		HeaderPhrases: []string{
-			"GirlJuice.Inject();",
-			"Child.CrowdKill();",
-			"CopCar.Burn();",
-			"You.Cute = true;",
-			"You.Gay = true;",
-			"Nazi.Punch();",
-			"Dolls.GiveGuns();",
-		},
-		BackgroundScrollX: "1",
-		BackgroundScrollY: "0",
-		PageTitle:         "TransRights",
-		SearchPlaceholder: "Search on DuckDuckGo",
-		SearchFormAction:  "https://duckduckgo.com/",
-		SearchInputName:   "q",
+type Config struct{
+	Server ServerConfig
+	Template TemplateConfig
+}
 
-		StoreFilter: diyhrt.StoreFilter{
-			Limit: 0,
-			IncludeIds: []int{7},
+func NewConfig() Config{
+	return Config{
+		Server: ServerConfig{
+			Port: 5500,
 		},
+		Template: TemplateConfig{
+			HeaderPhrases: []string{
+				"GirlJuice.Inject();",
+				"Child.CrowdKill();",
+				"CopCar.Burn();",
+				"You.Cute = true;",
+				"You.Gay = true;",
+				"Nazi.Punch();",
+				"Dolls.GiveGuns();",
+			},
+			BackgroundScrollX: "1",
+			BackgroundScrollY: "0",
+			PageTitle:         "TransRights",
+			SearchPlaceholder: "Search on DuckDuckGo",
+			SearchFormAction:  "https://duckduckgo.com/",
+			SearchInputName:   "q",
 
-		ListingFilter: diyhrt.ListingFilter{
-			FromStores: []int{7},
+			StoreFilter: diyhrt.StoreFilter{
+				Limit: 0,
+				IncludeIds: []int{7},
+			},
+
+			ListingFilter: diyhrt.ListingFilter{
+				FromStores: []int{7},
+			},
 		},
 	}
 }
 
-func (rc *RenderingConfig) LoadDiyHrt(listings []diyhrt.Listing) {
+func (rc *TemplateConfig) LoadDiyHrt(listings []diyhrt.Listing) {
 	existingStores := make(map[int]diyhrt.Store)
 
 	for _, listing := range listings {
@@ -70,7 +84,7 @@ func (rc *RenderingConfig) LoadDiyHrt(listings []diyhrt.Listing) {
 }
 
 
-func (rc *RenderingConfig) ScanForConfigFile(profile string) error {
+func (rc *Config) ScanForConfigFile(profile string) error {
 	profileFile := profile + ".toml"
 
 	configPath := configdir.LocalConfig("startpage")
@@ -91,7 +105,7 @@ func (rc *RenderingConfig) ScanForConfigFile(profile string) error {
 	return errors.New("No config file found")
 }
 
-func (rc *RenderingConfig) LoadConfigFile(file string) error {
+func (rc *Config) LoadConfigFile(file string) error {
 	if _, err := os.Stat(file); err != nil {
 		return err
 	}

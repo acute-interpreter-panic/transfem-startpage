@@ -8,14 +8,19 @@ https://diyhrt.market/api/
 2. Run air
 
 ```sh
-air
+air dev
 ```
+
+## Config and Profiles
+
+This tool works with profiles. The default profile is `startpage`. If you want to load another profile just write it as command line arg after the command. To write a config File you can create the files here:
+
+- `{profile}.toml`
+- `.{profile}.toml`
+- `~/.config/startpage/{profile}.toml`
 
 ## TODO
 
-- implement regular fetching
-- implement starting it on a certain port depending on command line arg
-- implement config file
 - implement ctl
 - implement fetching in intervals
 - actually building and figuring out how I should do that
