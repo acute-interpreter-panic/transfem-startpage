@@ -26,6 +26,22 @@ const searchEngines = {
     },
 };
 
+const translationPrefixes = [
+    "t",
+    "translation",
+]
+
+
+function getDeepLUrl(s) {
+    const parts = s.split("-")
+    if (parts.length != 3) {
+        return undefined
+    }
+
+    return `https://www.deepl.com/en/translator?/#${encodeURIComponent(parts[0].trim())}/${encodeURIComponent(parts[1].trim())}/${encodeURIComponent(parts[2].trim())}`;
+}
+
+
 form.addEventListener("submit", event => {
     event.preventDefault();
 
@@ -35,6 +51,25 @@ form.addEventListener("submit", event => {
     if (s.match(urlRegex)) {
         window.open(s, "_self");
         return
+    }
+
+    // deepl translations
+    let doTranslation = false;
+    for (const value of translationPrefixes) {
+        const prefix = `!${value} `;
+        if (s.startsWith(prefix)) {
+            doTranslation = true;
+            s = s.slice(prefix.length); // Remove the !{key} prefix
+            break;
+        }
+    }
+
+    if (doTranslation) {
+        const url = getDeepLUrl(s);
+        if (url) {
+            window.open(url.toString(), "_self");
+            return;
+        }
     }
 
     // Check if the string starts with ! followed by a key from searchEngines
