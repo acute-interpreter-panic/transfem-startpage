@@ -2,8 +2,10 @@ package rendering
 
 import (
 	"maps"
+	"os"
 	"slices"
 
+	"github.com/pelletier/go-toml"
 	"gitea.elara.ws/Hazel/transfem-startpage/internal/diyhrt"
 )
 
@@ -61,4 +63,18 @@ func (rc *RenderingConfig) LoadDiyHrt(listings []diyhrt.Listing) {
 
 	rc.Listings = rc.ListingFilter.Filter(listings)
 	rc.Stores = rc.StoreFilter.Filter(slices.Collect(maps.Values(existingStores)))
+}
+
+func (rc *RenderingConfig) LoadConfigFile(file string) error {
+	content, err := os.ReadFile(file)
+
+	if err != nil {
+		return err
+	}
+
+	err = toml.Unmarshal(content, rc)
+	if err != nil {
+		return err
+    }
+	return nil
 }

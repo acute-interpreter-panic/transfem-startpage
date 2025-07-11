@@ -41,6 +41,9 @@ func getIndex(c echo.Context) error {
 
 func main() {
 	fmt.Println("running transfem startpage")
+
+	CurrentRenderingConfig.LoadConfigFile("config.toml")
+
 	err := FetchDiyHrt()
 	if err != nil {
 		fmt.Println(err)
