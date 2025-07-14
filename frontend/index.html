@@ -15,7 +15,8 @@
             </div>
 
             <input id="search-input" name="{{ .SearchInputName }}" type="text" class="grid-item" class="search" placeholder="{{ .SearchPlaceholder }}" autocomplete="off" />
-
+            
+            {{ if eq .ActiveCard "stores" }}
             <div class="cards" id="stores">
                 {{range $Store := .Stores }}
                 <a target="_blank" href="{{ $Store.Url }}" class="card">
@@ -23,7 +24,9 @@
                 </a>
                 {{- end }}
             </div>
+            {{ end }}
 
+            {{ if eq .ActiveCard "listings" }}
             <div class="cards" id="listings">
                 {{range $Listing := .Listings }}
                 <a target="_blank" href="{{ $Listing.Url }}" class="card {{ if $Listing.InStock }}in-stock{{ end }}">
@@ -32,6 +35,7 @@
                 </a>
                 {{- end }}
             </div>
+            {{ end }}
         </form>
 
         <script>

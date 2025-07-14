@@ -13,6 +13,14 @@ import (
 	"github.com/pelletier/go-toml"
 )
 
+type ActiveCard string
+
+const (
+	DiyHrtStores   ActiveCard = "stores"
+	DiyHrtListings ActiveCard = "listings"
+	Websites       ActiveCard = "websites"
+)
+
 type ServerConfig struct {
 	Port int
 }
@@ -26,19 +34,23 @@ type TemplateConfig struct {
 	SearchFormAction  string
 	SearchInputName   string
 
-	StoreFilter diyhrt.StoreFilter
+	StoreFilter   diyhrt.StoreFilter
 	ListingFilter diyhrt.ListingFilter
 
 	Listings []diyhrt.Listing
 	Stores   []diyhrt.Store
+
+	ActiveCard ActiveCard
+
+	Websites []Website
 }
 
-type Config struct{
-	Server ServerConfig
+type Config struct {
+	Server   ServerConfig
 	Template TemplateConfig
 }
 
-func NewConfig() Config{
+func NewConfig() Config {
 	return Config{
 		Server: ServerConfig{
 			Port: 5500,
@@ -60,13 +72,19 @@ func NewConfig() Config{
 			SearchFormAction:  "https://duckduckgo.com/",
 			SearchInputName:   "q",
 
+			ActiveCard: DiyHrtListings,
+
 			StoreFilter: diyhrt.StoreFilter{
-				Limit: 0,
+				Limit:      0,
 				IncludeIds: []int{7},
 			},
 
 			ListingFilter: diyhrt.ListingFilter{
 				FromStores: []int{7},
+			},
+
+			Websites: []Website{
+				{Url: "https://gitea.elara.ws/Hazel/transfem-startpage", Name: "Transfem Startpage", ImageUrl: "https://gitea.elara.ws/assets/img/logo.svg"},
 			},
 		},
 	}
@@ -82,7 +100,6 @@ func (rc *TemplateConfig) LoadDiyHrt(listings []diyhrt.Listing) {
 	rc.Listings = rc.ListingFilter.Filter(listings)
 	rc.Stores = rc.StoreFilter.Filter(slices.Collect(maps.Values(existingStores)))
 }
-
 
 func (rc *Config) ScanForConfigFile(profile string) error {
 	profileFile := profile + ".toml"
@@ -118,5 +135,5 @@ func (rc *Config) LoadConfigFile(file string) error {
 		return err
 	}
 
-	return  toml.Unmarshal(content, rc)
+	return toml.Unmarshal(content, rc)
 }
