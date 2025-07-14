@@ -1,2 +1,5 @@
 [Server]
 Port = 1234
+
+[Template]
+ActiveCard = "stores"
