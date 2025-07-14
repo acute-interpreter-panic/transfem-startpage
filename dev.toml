@@ -3,3 +3,14 @@ Port = 1234
 
 [Template]
 ActiveCard = "websites"
+
+[[Template.Websites]]
+Name = "Transfem Startpage"
+Url = "https://gitea.elara.ws/Hazel/transfem-startpage"
+ImageUrl = "https://gitea.elara.ws/assets/img/logo.svg"
+
+[[Template.Websites]]
+Name = "GoLang"
+Url = "https://go.dev/"
+ImageUrl = "https://go.dev/images/gophers/motorcycle.svg"
+
