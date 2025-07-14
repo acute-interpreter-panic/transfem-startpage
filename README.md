@@ -43,8 +43,8 @@ air dev
 
 ## TODO
 
-- implement ctl
+- implement fetching website logos, to run at the start of the program and serve it from the temp directory
 - implement fetching in intervals
-- actually building and figuring out how I should do that
+- implement ctl
 - writing documentation
 - implement autocomplete with a nice go backend and fast communication. Since it all runs locally nobody should have privacy concerns NEEDS TO BE ABLE TO TOGGLED OFF FOR DEMO PAGE
