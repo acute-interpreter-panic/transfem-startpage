@@ -4,7 +4,9 @@ import (
 	"bytes"
 	"embed"
 	"fmt"
+	"html/template"
 	"io/fs"
+	"log"
 	"net/http"
 	"os"
 	"strconv"
@@ -27,15 +29,27 @@ func FetchDiyHrt() error {
 	return nil
 }
 
+//go:embed frontend/*
+var frontendFiles embed.FS
+
+func getFileContent() string {
+	content, err := frontendFiles.ReadFile("frontend/index.html")
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	return string(content)
+}
+
+var IndexTemplate = template.Must(template.New("index").Parse(getFileContent()))
+
 func getIndex(c echo.Context) error {
 	var tpl bytes.Buffer
-	rendering.IndexTemplate.Execute(&tpl, CurrentConfig.Template)
+	IndexTemplate.Execute(&tpl, CurrentConfig.Template)
 
 	return c.HTML(http.StatusOK, tpl.String())
 }
-
-//go:embed frontend/*
-var frontendFiles embed.FS
 
 func getFileSystem() http.FileSystem {
 	fsys, err := fs.Sub(frontendFiles, "frontend")
@@ -66,8 +80,8 @@ func main() {
 	}
 
 	e := echo.New()
-	// "frontend/assets"
 
+	// https://echo.labstack.com/docs/cookbook/embed-resources
 	staticHandler := http.FileServer(getFileSystem())
 	e.GET("/assets/*", echo.WrapHandler(http.StripPrefix("/", staticHandler)))
 	e.GET("/scripts/*", echo.WrapHandler(http.StripPrefix("/", staticHandler)))
