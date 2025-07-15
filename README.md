@@ -43,6 +43,7 @@ air dev
 
 ## TODO
 
+- configure target of website cards
 - implementing proper command line args
     - clear cache
 - implement fetching in intervals

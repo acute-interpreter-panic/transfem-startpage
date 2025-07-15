@@ -40,7 +40,7 @@
             {{ if eq .ActiveCard "websites" }}
             <div class="cards" id="websites">
                 {{range $Website := .Websites }}
-                <a target="_blank" href="{{ $Website.Url }}" class="card">
+                <a href="{{ $Website.Url }}" class="card">
                     <h3>{{ $Website.Name }}</h3>
                     <img class="card-image" src="{{ $Website.ImageUrl }}" alt="{{ $Website.Name }} picture">
                 </a>
