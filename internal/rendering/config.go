@@ -9,7 +9,6 @@ import (
 	"slices"
 
 	"gitea.elara.ws/Hazel/transfem-startpage/internal/diyhrt"
-	"github.com/kirsle/configdir"
 	"github.com/pelletier/go-toml"
 )
 
@@ -103,11 +102,13 @@ func (c *Config) LoadDiyHrt(listings []diyhrt.Listing) {
 func (rc *Config) ScanForConfigFile(profile string) error {
 	profileFile := profile + ".toml"
 
-	configPath := configdir.LocalConfig("startpage")
-	configFile := filepath.Join(configPath, profileFile)
+	baseDir, cacheDirErr := os.UserConfigDir()
+	if cacheDirErr == nil {
+		configFile := filepath.Join(baseDir, "startpage", profileFile)
 
-	if err := rc.LoadConfigFile(configFile); !errors.Is(err, os.ErrNotExist) {
-		return err
+		if err := rc.LoadConfigFile(configFile); !errors.Is(err, os.ErrNotExist) {
+			return err
+		}
 	}
 
 	if err := rc.LoadConfigFile(profileFile); !errors.Is(err, os.ErrNotExist) {

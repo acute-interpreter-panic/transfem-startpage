@@ -45,7 +45,6 @@ air dev
 
 - implementing proper command line args
     - clear cache
-- use `os.UserConfigDir()` instead of the current library
 - implement fetching in intervals
     - host this website on a demo page
 - implement ctl
