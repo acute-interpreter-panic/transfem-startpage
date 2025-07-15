@@ -138,9 +138,8 @@ func (rc *Config) LoadConfigFile(file string) error {
 }
 
 func (c *Config) Init() error {
-	for i, w := range c.Template.Websites {
+	for i, _ := range c.Template.Websites {
 		c.Template.Websites[i].Cache()
-		fmt.Println(w.ImageUrl)
 	}
 
 	return nil
