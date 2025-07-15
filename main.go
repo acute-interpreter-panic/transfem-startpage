@@ -61,13 +61,11 @@ func getFileSystem() http.FileSystem {
 }
 
 func main() {
-	fmt.Println("running transfem startpage")
-
-	profile := "startpage"
+	profile := "default"
 	if len(os.Args) > 1 {
 		profile = os.Args[1]
 	}
-	fmt.Println("loading profile " + profile + "...")
+	fmt.Println("loading profile " + profile)
 
 	err := CurrentConfig.ScanForConfigFile(profile)
 	if err != nil {

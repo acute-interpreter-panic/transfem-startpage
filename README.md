@@ -20,7 +20,7 @@ To configure this new tab page as website, you can install the firefox extension
 
 ## Config and Profiles
 
-This tool works with profiles. The default profile is `startpage`. If you want to load another profile just write it as command line arg after the command. To write a config File you can create the files here:
+This tool works with profiles. The default profile is `default`. If you want to load another profile just write it as command line arg after the command. To write a config File you can create the files here:
 
 - `{profile}.toml`
 - `.{profile}.toml`
@@ -43,8 +43,12 @@ air dev
 
 ## TODO
 
-- implement fetching website logos, to run at the start of the program and serve it from the temp directory
+- implementing proper command line args
+    - clear cache
+- use `os.UserConfigDir()` instead of the current library
 - implement fetching in intervals
+    - host this website on a demo page
 - implement ctl
-- writing documentation
 - implement autocomplete with a nice go backend and fast communication. Since it all runs locally nobody should have privacy concerns NEEDS TO BE ABLE TO TOGGLED OFF FOR DEMO PAGE
+
+WRITE DOCUMENTATION

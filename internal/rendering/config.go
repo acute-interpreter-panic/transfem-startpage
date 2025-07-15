@@ -139,7 +139,7 @@ func (rc *Config) LoadConfigFile(file string) error {
 
 func (c *Config) Init() error {
 	fmt.Print("downloading website icons")
-	for i, _ := range c.Template.Websites {
+	for i := range c.Template.Websites {
 		fmt.Print(".")
 		c.Template.Websites[i].Cache()
 	}
