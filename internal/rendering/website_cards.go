@@ -3,7 +3,6 @@ package rendering
 import (
 	"crypto/sha1"
 	"encoding/hex"
-	"fmt"
 	"io"
 	"net/http"
 	"net/url"
@@ -49,8 +48,7 @@ func (w *Website) Cache() error {
 		return err
 	}
 
-	filename := hashUrl(w.ImageUrl)
-	fmt.Println(w.ImageUrl + " => " + filename)
+	filename := hashUrl(w.ImageUrl) + filepath.Ext(w.ImageUrl)
 	targetPath := filepath.Join(cacheDir, filename)
 	resp, err := http.Get(w.ImageUrl)
 	if err != nil {

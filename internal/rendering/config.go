@@ -118,7 +118,7 @@ func (rc *Config) ScanForConfigFile(profile string) error {
 		return err
 	}
 
-	return errors.New("No config file found")
+	return errors.New("no config file found")
 }
 
 func (rc *Config) LoadConfigFile(file string) error {
@@ -138,9 +138,12 @@ func (rc *Config) LoadConfigFile(file string) error {
 }
 
 func (c *Config) Init() error {
+	fmt.Print("downloading website icons")
 	for i, _ := range c.Template.Websites {
+		fmt.Print(".")
 		c.Template.Websites[i].Cache()
 	}
+	fmt.Print("\n")
 
 	return nil
 }
