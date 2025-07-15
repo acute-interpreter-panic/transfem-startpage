@@ -3,6 +3,7 @@ package rendering
 import (
 	"crypto/sha1"
 	"encoding/hex"
+	"errors"
 	"io"
 	"net/http"
 	"net/url"
@@ -50,24 +51,29 @@ func (w *Website) Cache() error {
 
 	filename := hashUrl(w.ImageUrl) + filepath.Ext(w.ImageUrl)
 	targetPath := filepath.Join(cacheDir, filename)
-	resp, err := http.Get(w.ImageUrl)
-	if err != nil {
-		return err
+
+	// if the file was already downloaded it doesn't need to be downloaded again
+	if _, err := os.Stat(targetPath); errors.Is(err, os.ErrNotExist) {
+		resp, err := http.Get(w.ImageUrl)
+		if err != nil {
+			return err
+		}
+		defer resp.Body.Close()
+
+		file, err := os.Create(targetPath)
+		if err != nil {
+			return err
+		}
+		defer file.Close()
+
+		_, err = io.Copy(file, resp.Body)
+
+		if err != nil {
+			return err
+		}
 	}
-	defer resp.Body.Close()
 
-	file, err := os.Create(targetPath)
-	if err != nil {
-		return err
-	}
-	defer file.Close()
-
-	_, err = io.Copy(file, resp.Body)
-
-	if err != nil {
-		return err
-	}
-
+	// set the value in the struct to the current file
 	w.ImageUrl, _ = url.JoinPath(CacheUrl, filename)
 	w.IsFetched = true
 	return nil
