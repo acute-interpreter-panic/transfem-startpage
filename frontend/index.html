@@ -18,8 +18,9 @@
             
             {{ if eq .ActiveCard "stores" }}
             <div class="cards" id="stores">
+                {{ $T := .DiyHrtTarget }}
                 {{range $Store := .Stores }}
-                <a target="_blank" href="{{ $Store.Url }}" class="card">
+                <a target="{{ $T }}" href="{{ $Store.Url }}" class="card">
                     <h3>{{ $Store.Name }}</h3>
                 </a>
                 {{- end }}
@@ -28,8 +29,9 @@
 
             {{ if eq .ActiveCard "listings" }}
             <div class="cards" id="listings">
+                {{ $T := .DiyHrtTarget }}
                 {{range $Listing := .Listings }}
-                <a target="_blank" href="{{ $Listing.Url }}" class="card {{ if $Listing.InStock }}in-stock{{ end }}">
+                <a target="{{ $T }}" href="{{ $Listing.Url }}" class="card {{ if $Listing.InStock }}in-stock{{ end }}">
                     <h3>{{ $Listing.ProductName }}</h3>
                     <p>{{ $Listing.StoreName }} - {{ $Listing.Price }} {{ $Listing.PriceCurrency }}</p>
                 </a>
@@ -39,8 +41,9 @@
 
             {{ if eq .ActiveCard "websites" }}
             <div class="cards" id="websites">
+                {{ $T := .WebsiteTarget }}
                 {{range $Website := .Websites }}
-                <a href="{{ $Website.Url }}" class="card">
+                <a href="{{ $Website.Url }}" class="card" target="{{ $T }}">
                     <h3>{{ $Website.Name }}</h3>
                     <img class="card-image" src="{{ $Website.ImageUrl }}" alt="{{ $Website.Name }} picture">
                 </a>

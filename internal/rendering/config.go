@@ -20,6 +20,15 @@ const (
 	Websites       ActiveCard = "websites"
 )
 
+type AnchorTarget string
+
+const (
+	OpenInNewTab     AnchorTarget = "_blank"
+	OpenInCurrentTab AnchorTarget = "_self"
+	OpenInParent     AnchorTarget = "_parent"
+	OpenInTopWindow  AnchorTarget = "_top"
+)
+
 type ServerConfig struct {
 	Port int
 }
@@ -33,12 +42,14 @@ type TemplateConfig struct {
 	SearchFormAction  string
 	SearchInputName   string
 
-	Listings []diyhrt.Listing
-	Stores   []diyhrt.Store
+	Listings     []diyhrt.Listing
+	Stores       []diyhrt.Store
+	DiyHrtTarget AnchorTarget
 
 	ActiveCard ActiveCard
 
-	Websites []Website
+	Websites      []Website
+	WebsiteTarget AnchorTarget
 }
 
 type Config struct {
@@ -81,9 +92,12 @@ func NewConfig() Config {
 
 			ActiveCard: DiyHrtListings,
 
+			DiyHrtTarget: OpenInCurrentTab,
+
 			Websites: []Website{
 				{Url: "https://gitea.elara.ws/Hazel/transfem-startpage", Name: "Transfem Startpage", ImageUrl: "https://gitea.elara.ws/assets/img/logo.svg"},
 			},
+			WebsiteTarget: OpenInCurrentTab,
 		},
 	}
 }
