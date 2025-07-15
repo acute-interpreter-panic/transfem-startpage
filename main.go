@@ -74,12 +74,25 @@ func main() {
 		fmt.Println(err)
 	}
 
+	err = CurrentConfig.Init()
+	if err != nil {
+		fmt.Println(err)
+	}
+
 	err = FetchDiyHrt()
 	if err != nil {
 		fmt.Println(err)
 	}
 
 	e := echo.New()
+
+	// statically serve the file
+	cacheDir, err := rendering.GetCacheDir()
+	if err == nil {
+		e.Static("/cache", cacheDir)
+	} else {
+		fmt.Println(err)
+	}
 
 	// https://echo.labstack.com/docs/cookbook/embed-resources
 	staticHandler := http.FileServer(getFileSystem())
