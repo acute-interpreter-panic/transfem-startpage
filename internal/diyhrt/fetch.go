@@ -4,16 +4,14 @@ import (
 	"encoding/json"
 	"errors"
 	"net/http"
-	"os"
 	"time"
 )
 
 const endpoint = "https://diyhrt.market/api/listings"
 
-func GetListings() ([]Listing, error) {
-	apiKey := os.Getenv("API_KEY")
+func GetListings(apiKey string) ([]Listing, error) {
 	if apiKey == "" {
-		return nil, errors.New("API_KEY environment variable not set")
+		return nil, errors.New("API_KEY key not set. Set it as env or in DiyHrt.ApiKey")
 	}
 
 	// Create HTTP client

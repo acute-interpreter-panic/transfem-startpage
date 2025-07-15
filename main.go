@@ -21,7 +21,7 @@ var CurrentConfig = rendering.NewConfig()
 func FetchDiyHrt() error {
 	fmt.Println("Fetch DiyHrt Marketplaces...")
 
-	l, err := diyhrt.GetListings()
+	l, err := diyhrt.GetListings(CurrentConfig.DiyHrt.ApiKey)
 	if err != nil {
 		return err
 	}
