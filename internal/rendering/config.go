@@ -34,9 +34,6 @@ type TemplateConfig struct {
 	SearchFormAction  string
 	SearchInputName   string
 
-	StoreFilter   diyhrt.StoreFilter
-	ListingFilter diyhrt.ListingFilter
-
 	Listings []diyhrt.Listing
 	Stores   []diyhrt.Store
 
@@ -48,12 +45,23 @@ type TemplateConfig struct {
 type Config struct {
 	Server   ServerConfig
 	Template TemplateConfig
+	DiyHrt   diyhrt.DiyHrtConfig
 }
 
 func NewConfig() Config {
 	return Config{
 		Server: ServerConfig{
 			Port: 5500,
+		},
+		DiyHrt: diyhrt.DiyHrtConfig{
+			ApiKey: os.Getenv("API_KEY"),
+			StoreFilter: diyhrt.StoreFilter{
+				Limit:      0,
+				IncludeIds: []int{7},
+			},
+			ListingFilter: diyhrt.ListingFilter{
+				FromStores: []int{7},
+			},
 		},
 		Template: TemplateConfig{
 			HeaderPhrases: []string{
@@ -74,15 +82,6 @@ func NewConfig() Config {
 
 			ActiveCard: DiyHrtListings,
 
-			StoreFilter: diyhrt.StoreFilter{
-				Limit:      0,
-				IncludeIds: []int{7},
-			},
-
-			ListingFilter: diyhrt.ListingFilter{
-				FromStores: []int{7},
-			},
-
 			Websites: []Website{
 				{Url: "https://gitea.elara.ws/Hazel/transfem-startpage", Name: "Transfem Startpage", ImageUrl: "https://gitea.elara.ws/assets/img/logo.svg"},
 			},
@@ -90,15 +89,15 @@ func NewConfig() Config {
 	}
 }
 
-func (rc *TemplateConfig) LoadDiyHrt(listings []diyhrt.Listing) {
+func (c *Config) LoadDiyHrt(listings []diyhrt.Listing) {
 	existingStores := make(map[int]diyhrt.Store)
 
 	for _, listing := range listings {
 		existingStores[listing.Store.Id] = listing.Store
 	}
 
-	rc.Listings = rc.ListingFilter.Filter(listings)
-	rc.Stores = rc.StoreFilter.Filter(slices.Collect(maps.Values(existingStores)))
+	c.Template.Listings = c.DiyHrt.ListingFilter.Filter(listings)
+	c.Template.Stores = c.DiyHrt.StoreFilter.Filter(slices.Collect(maps.Values(existingStores)))
 }
 
 func (rc *Config) ScanForConfigFile(profile string) error {

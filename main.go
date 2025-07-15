@@ -25,7 +25,7 @@ func FetchDiyHrt() error {
 	if err != nil {
 		return err
 	}
-	CurrentConfig.Template.LoadDiyHrt(l)
+	CurrentConfig.LoadDiyHrt(l)
 	return nil
 }
 
