@@ -1,0 +1,17 @@
+[Server]
+Port = 1312
+
+[DiyHrt]
+FetchIntervals = 60
+
+[Template]
+ActiveCard = "listings"
+PageTitle = "TransfemStartpage demo"
+HeaderPhrases = [
+    "GirlJuice.Inject();",
+    "You.Cute = true;",
+    "You.Gay = true;",
+    "Nazi.Punch();",
+    "Dolls.GiveGuns();",
+    "Firefox > Chrome"
+]
