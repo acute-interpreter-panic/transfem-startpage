@@ -11,6 +11,7 @@ import (
 	"os"
 	"strconv"
 
+	"gitea.elara.ws/Hazel/transfem-startpage/internal/cli"
 	"gitea.elara.ws/Hazel/transfem-startpage/internal/diyhrt"
 	"gitea.elara.ws/Hazel/transfem-startpage/internal/rendering"
 	"github.com/labstack/echo/v4"
@@ -60,7 +61,7 @@ func getFileSystem() http.FileSystem {
 	return http.FS(fsys)
 }
 
-func main() {
+func backMain() {
 	profile := "default"
 	if len(os.Args) > 1 {
 		profile = os.Args[1]
@@ -99,4 +100,8 @@ func main() {
 	e.GET("/", getIndex)
 
 	e.Logger.Fatal(e.Start(":" + strconv.Itoa(CurrentConfig.Server.Port)))
+}
+
+func main() {
+	cli.Cli()
 }
