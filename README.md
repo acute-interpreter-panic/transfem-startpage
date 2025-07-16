@@ -55,9 +55,9 @@ air dev
 
 ## TODO
 
+- implement templating for every one of the frontend files
 - implement functionality to clear and clean cache
-- implement fetching in intervals
-    - host this website on a demo page
+- host this website on a demo page
 - implement ctl
 - implement autocomplete with a nice go backend and fast communication. Since it all runs locally nobody should have privacy concerns NEEDS TO BE ABLE TO TOGGLED OFF FOR DEMO PAGE
 
