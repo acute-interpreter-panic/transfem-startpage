@@ -63,7 +63,8 @@ func NewConfig() Config {
 			Port: 5500,
 		},
 		DiyHrt: diyhrt.DiyHrtConfig{
-			ApiKey: os.Getenv("API_KEY"),
+			ApiKey:         os.Getenv("API_KEY"),
+			FetchIntervals: 60, // fetch every hour
 			StoreFilter: diyhrt.StoreFilter{
 				Limit:      0,
 				IncludeIds: []int{7},
