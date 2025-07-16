@@ -138,12 +138,3 @@ func (rc *Config) LoadConfigFile(file string) error {
 
 	return toml.Unmarshal(content, rc)
 }
-
-func (c *Config) Init() error {
-	log.Println("downloading website icons...")
-	for i := range c.Template.Websites {
-		c.Template.Websites[i].Cache()
-	}
-
-	return nil
-}
