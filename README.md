@@ -55,8 +55,7 @@ air dev
 
 ## TODO
 
-- implementing proper command line args
-    - clear cache
+- implement functionality to clear and clean cache
 - implement fetching in intervals
     - host this website on a demo page
 - implement ctl
