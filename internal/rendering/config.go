@@ -2,7 +2,7 @@ package rendering
 
 import (
 	"errors"
-	"fmt"
+	"log"
 	"os"
 	"path/filepath"
 
@@ -128,7 +128,7 @@ func (rc *Config) LoadConfigFile(file string) error {
 		return err
 	}
 
-	fmt.Println("loading config file: " + file)
+	log.Println("loading config file", file)
 
 	content, err := os.ReadFile(file)
 
@@ -140,12 +140,10 @@ func (rc *Config) LoadConfigFile(file string) error {
 }
 
 func (c *Config) Init() error {
-	fmt.Print("downloading website icons")
+	log.Println("downloading website icons...")
 	for i := range c.Template.Websites {
-		fmt.Print(".")
 		c.Template.Websites[i].Cache()
 	}
-	fmt.Print("\n")
 
 	return nil
 }
