@@ -11,6 +11,13 @@ type Program struct {
 	Name             string
 	Function         ProgramFunction
 	ShortDescription string
+	Arguments        []Argument
+}
+type Argument struct {
+	Name        string
+	Type        string
+	Required    bool
+	Description string
 }
 
 var HelpHeader = `This is the help page of transfem-startpage.
@@ -20,16 +27,40 @@ var Programs = []Program{
 	{
 		Name:             "help",
 		ShortDescription: "get more information on how the cli in general or a specific program works",
+		Arguments: []Argument{
+			{
+				Name:        "program",
+				Type:        "string",
+				Required:    false,
+				Description: "defines the program you want to know more about",
+			},
+		},
 	},
 	{
 		Name:             "start",
 		Function:         Start,
 		ShortDescription: "start the webserver",
+		Arguments: []Argument{
+			{
+				Name:        "profile",
+				Type:        "string",
+				Required:    false,
+				Description: "tells the program which config to load, default is 'default'",
+			},
+		},
 	},
 	{
 		Name:             "cache",
 		Function:         Cache,
 		ShortDescription: "do something with the cache",
+		Arguments: []Argument{
+			{
+				Name:        "action",
+				Type:        "enum(clear;clean)",
+				Required:    true,
+				Description: "defines what to do with the cache",
+			},
+		},
 	},
 }
 
