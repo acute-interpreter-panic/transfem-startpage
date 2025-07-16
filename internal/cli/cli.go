@@ -1,7 +1,6 @@
 package cli
 
 import (
-	"fmt"
 	"log"
 	"os"
 
@@ -13,6 +12,7 @@ type Program struct {
 	Name             string
 	Function         ProgramFunction
 	ShortDescription string
+	LongDescription  string
 	Arguments        []Argument
 }
 type Argument struct {
@@ -23,12 +23,13 @@ type Argument struct {
 }
 
 var HelpHeader = `This is the help page of transfem-startpage.
-` + color.Bold + `transfem-startpage {program} {...args}` + color.Reset + `
+` + color.Purple + `transfem-startpage {program} {...args}` + color.Reset + `
 The following Programs are available:`
 var Programs = []Program{
 	{
 		Name:             "help",
 		ShortDescription: "get more information on how the cli in general or a specific program works",
+		LongDescription:  "What did you expect to find here?",
 		Arguments: []Argument{
 			{
 				Name:        "program",
@@ -42,6 +43,9 @@ var Programs = []Program{
 		Name:             "start",
 		Function:         Start,
 		ShortDescription: "start the webserver",
+		LongDescription: `The start program starts the webserver.
+It loads the config file of the according profile.
+It uses the default values if no config file was found.`,
 		Arguments: []Argument{
 			{
 				Name:        "profile",
@@ -55,6 +59,9 @@ var Programs = []Program{
 		Name:             "cache",
 		Function:         Cache,
 		ShortDescription: "do something with the cache",
+		LongDescription: `Does something with the cache.
+- clear: delete the whole cache
+- clean: delete all files that aren't used by any program.`,
 		Arguments: []Argument{
 			{
 				Name:        "action",
@@ -66,9 +73,18 @@ var Programs = []Program{
 	},
 }
 
-func Cli() {
-	fmt.Println("running transfem startpage")
+func GetProgram(programName string) Program {
+	for i, p := range Programs {
+		if p.Name == programName {
+			return Programs[i]
+		}
+	}
 
+	log.Panicln("couldn't find program", programName, ". EXITING")
+	return Program{}
+}
+
+func Cli() {
 	// getting around initialization cycle
 	Programs[0].Function = Help
 
@@ -77,18 +93,9 @@ func Cli() {
 		programName = os.Args[1]
 	}
 
-	log.Println("running program", programName)
-
-	var selectedProgram *Program = nil
-	for i, p := range Programs {
-		if p.Name == programName {
-			selectedProgram = &Programs[i]
-			break
-		}
+	var selectedProgram Program = GetProgram(programName)
+	err := selectedProgram.Function()
+	if err != nil {
+		log.Panicln(err)
 	}
-	if selectedProgram == nil {
-		log.Panicln("couldn't find program", programName, ". EXITING")
-	}
-
-	selectedProgram.Function()
 }
