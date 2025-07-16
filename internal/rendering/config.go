@@ -3,10 +3,8 @@ package rendering
 import (
 	"errors"
 	"fmt"
-	"maps"
 	"os"
 	"path/filepath"
-	"slices"
 
 	"gitea.elara.ws/Hazel/transfem-startpage/internal/diyhrt"
 	"github.com/pelletier/go-toml"
@@ -100,17 +98,6 @@ func NewConfig() Config {
 			WebsiteTarget: OpenInCurrentTab,
 		},
 	}
-}
-
-func (c *Config) LoadDiyHrt(listings []diyhrt.Listing) {
-	existingStores := make(map[int]diyhrt.Store)
-
-	for _, listing := range listings {
-		existingStores[listing.Store.Id] = listing.Store
-	}
-
-	c.Template.Listings = c.DiyHrt.ListingFilter.Filter(listings)
-	c.Template.Stores = c.DiyHrt.StoreFilter.Filter(slices.Collect(maps.Values(existingStores)))
 }
 
 func (rc *Config) ScanForConfigFile(profile string) error {
