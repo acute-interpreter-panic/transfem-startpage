@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"log"
 	"os"
+
+	"github.com/TwiN/go-color"
 )
 
 type ProgramFunction func() error
@@ -21,7 +23,7 @@ type Argument struct {
 }
 
 var HelpHeader = `This is the help page of transfem-startpage.
-transfem-startpage {program} {...args}
+` + color.Bold + `transfem-startpage {program} {...args}` + color.Reset + `
 The following Programs are available:`
 var Programs = []Program{
 	{
