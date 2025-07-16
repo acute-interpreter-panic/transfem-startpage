@@ -5,6 +5,7 @@ import (
 	"os"
 	"strings"
 
+	"gitea.elara.ws/Hazel/transfem-startpage/internal/utils"
 	"github.com/TwiN/go-color"
 )
 
@@ -55,7 +56,7 @@ func specificHelp(programName string) error {
 	fmt.Println(color.Bold + "MAN PAGE FOR " + strings.ToUpper(programName) + color.Reset)
 	fmt.Println()
 
-	fmt.Println(color.Purple + "transfem-startpage " + programName + color.Reset + getArgumentString(program.Arguments))
+	fmt.Println(color.Purple + utils.BinaryName + " " + programName + color.Reset + getArgumentString(program.Arguments))
 	fmt.Println()
 
 	fmt.Println(color.Bold + "arguments" + color.Reset)

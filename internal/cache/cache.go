@@ -10,6 +10,7 @@ import (
 	"os"
 	"path/filepath"
 
+	"gitea.elara.ws/Hazel/transfem-startpage/internal/utils"
 	"github.com/labstack/echo/v4"
 )
 
@@ -23,7 +24,7 @@ func getCacheDir() (string, error) {
 	if err != nil {
 		baseDir = "/tmp"
 	}
-	cacheDir := filepath.Join(baseDir, "startpage")
+	cacheDir := filepath.Join(baseDir, utils.Name)
 	err = os.MkdirAll(cacheDir, 0o755)
 	if err != nil {
 		return "", err

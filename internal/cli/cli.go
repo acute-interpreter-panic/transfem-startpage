@@ -4,6 +4,7 @@ import (
 	"log"
 	"os"
 
+	"gitea.elara.ws/Hazel/transfem-startpage/internal/utils"
 	"github.com/TwiN/go-color"
 )
 
@@ -22,8 +23,8 @@ type Argument struct {
 	Description string
 }
 
-var HelpHeader = `This is the help page of transfem-startpage.
-` + color.Purple + `transfem-startpage {program} {...args}` + color.Reset + `
+var HelpHeader = `This is the help page of ` + utils.Name + `.
+` + color.Purple + utils.BinaryName + ` {program} {...args}` + color.Reset + `
 The following Programs are available:`
 var Programs = []Program{
 	{

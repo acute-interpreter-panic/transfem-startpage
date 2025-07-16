@@ -7,6 +7,7 @@ import (
 	"path/filepath"
 
 	"gitea.elara.ws/Hazel/transfem-startpage/internal/diyhrt"
+	"gitea.elara.ws/Hazel/transfem-startpage/internal/utils"
 	"github.com/pelletier/go-toml"
 )
 
@@ -105,7 +106,7 @@ func (rc *Config) ScanForConfigFile(profile string) error {
 
 	baseDir, cacheDirErr := os.UserConfigDir()
 	if cacheDirErr == nil {
-		configFile := filepath.Join(baseDir, "startpage", profileFile)
+		configFile := filepath.Join(baseDir, utils.Name, profileFile)
 
 		if err := rc.LoadConfigFile(configFile); !errors.Is(err, os.ErrNotExist) {
 			return err

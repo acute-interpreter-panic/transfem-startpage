@@ -11,7 +11,7 @@ const endpoint = "https://diyhrt.market/api/listings"
 
 func GetListings(apiKey string) ([]Listing, error) {
 	if apiKey == "" {
-		return nil, errors.New("API_KEY key not set. Set it as env or in DiyHrt.ApiKey")
+		return nil, errors.New("diyhrt API_KEY key not set. Set it as env or in DiyHrt.ApiKey")
 	}
 
 	// Create HTTP client
