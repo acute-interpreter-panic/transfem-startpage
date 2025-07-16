@@ -13,7 +13,7 @@ go install gitea.elara.ws/Hazel/transfem-startpage
 Then you can run the program `transfem-startpage`
 
 ```sh
-transfem-startpage
+transfem-startpage help
 ```
 
 To configure this new tab page as website, you can install the firefox extension [New Tab Override](https://addons.mozilla.org/en-US/firefox/addon/new-tab-override/). Then just configure the url as `http://127.0.0.1:{port}/`. The default port should be `5500` but it will also print it out when starting the server. Make sure to check the box `Set focus to the web page instead of the address bar` in the extension settings, because the new tab page auto focuses the search bar.
