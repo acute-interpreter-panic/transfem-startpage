@@ -2,13 +2,12 @@ package rendering
 
 import (
 	"errors"
-	"fmt"
-	"maps"
+	"log"
 	"os"
 	"path/filepath"
-	"slices"
 
 	"gitea.elara.ws/Hazel/transfem-startpage/internal/diyhrt"
+	"gitea.elara.ws/Hazel/transfem-startpage/internal/utils"
 	"github.com/pelletier/go-toml"
 )
 
@@ -102,23 +101,12 @@ func NewConfig() Config {
 	}
 }
 
-func (c *Config) LoadDiyHrt(listings []diyhrt.Listing) {
-	existingStores := make(map[int]diyhrt.Store)
-
-	for _, listing := range listings {
-		existingStores[listing.Store.Id] = listing.Store
-	}
-
-	c.Template.Listings = c.DiyHrt.ListingFilter.Filter(listings)
-	c.Template.Stores = c.DiyHrt.StoreFilter.Filter(slices.Collect(maps.Values(existingStores)))
-}
-
 func (rc *Config) ScanForConfigFile(profile string) error {
 	profileFile := profile + ".toml"
 
 	baseDir, cacheDirErr := os.UserConfigDir()
 	if cacheDirErr == nil {
-		configFile := filepath.Join(baseDir, "startpage", profileFile)
+		configFile := filepath.Join(baseDir, utils.Name, profileFile)
 
 		if err := rc.LoadConfigFile(configFile); !errors.Is(err, os.ErrNotExist) {
 			return err
@@ -141,7 +129,7 @@ func (rc *Config) LoadConfigFile(file string) error {
 		return err
 	}
 
-	fmt.Println("loading config file: " + file)
+	log.Println("loading config file", file)
 
 	content, err := os.ReadFile(file)
 
@@ -150,15 +138,4 @@ func (rc *Config) LoadConfigFile(file string) error {
 	}
 
 	return toml.Unmarshal(content, rc)
-}
-
-func (c *Config) Init() error {
-	fmt.Print("downloading website icons")
-	for i := range c.Template.Websites {
-		fmt.Print(".")
-		c.Template.Websites[i].Cache()
-	}
-	fmt.Print("\n")
-
-	return nil
 }

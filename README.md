@@ -2,7 +2,7 @@
 
 I am using the api of [diyhrt.market](https://diyhrt.market/api/) to get the current stats data of estrogen stocks.
 
-# Installation
+## Installation
 
 To install the new tab page you can use `go install`
 
@@ -13,10 +13,22 @@ go install gitea.elara.ws/Hazel/transfem-startpage
 Then you can run the program `transfem-startpage`
 
 ```sh
-transfem-startpage
+transfem-startpage help
 ```
 
 To configure this new tab page as website, you can install the firefox extension [New Tab Override](https://addons.mozilla.org/en-US/firefox/addon/new-tab-override/). Then just configure the url as `http://127.0.0.1:{port}/`. The default port should be `5500` but it will also print it out when starting the server. Make sure to check the box `Set focus to the web page instead of the address bar` in the extension settings, because the new tab page auto focuses the search bar.
+
+## CLI
+
+```sh
+transfem-startpage {program} {...args}
+```
+
+program | args | description
+---|---|---
+`help` | `program:optional` | get more information on how the cli or one program works
+`start` | `profile:optional` | start the webserver for a certain profile
+`cache` | `action:emum(clear;clean)` | so something with the cache
 
 ## Config and Profiles
 
