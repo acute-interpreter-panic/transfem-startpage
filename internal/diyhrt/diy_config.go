@@ -1,7 +1,9 @@
 package diyhrt
 
 type DiyHrtConfig struct {
-	ApiKey        string
+	ApiKey         string
+	FetchIntervals int
+
 	StoreFilter   StoreFilter
 	ListingFilter ListingFilter
 }

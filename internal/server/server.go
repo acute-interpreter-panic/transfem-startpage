@@ -4,6 +4,7 @@ import (
 	"log"
 	"net/http"
 	"strconv"
+	"time"
 
 	"gitea.elara.ws/Hazel/transfem-startpage/internal/cache"
 	"gitea.elara.ws/Hazel/transfem-startpage/internal/rendering"
@@ -12,11 +13,25 @@ import (
 
 var Config = rendering.NewConfig()
 
+func StartFetching() {
+	for {
+		log.Println("Fetch DiyHrt data...")
+		Config.FetchDiyHrt()
+		time.Sleep(time.Duration(Config.DiyHrt.FetchIntervals) * time.Second)
+
+		if Config.DiyHrt.FetchIntervals == 0 {
+			break
+		}
+	}
+}
+
 func Start(profile string) error {
 	err := Config.ScanForConfigFile(profile)
 	if err != nil {
 		return err
 	}
+
+	go StartFetching()
 
 	err = Config.FetchDiyHrt()
 	if err != nil {
