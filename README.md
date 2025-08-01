@@ -2,6 +2,8 @@
 
 I am using the api of [diyhrt.market](https://diyhrt.market/api/) to get the current stats data of estrogen stocks.
 
+![screenshot of the new tab page](assets/screenshot_desktop.png)
+
 ## Installation
 
 To install the new tab page you can use `go install`
@@ -55,10 +57,8 @@ air dev
 
 ## TODO
 
-- implement templating for every one of the frontend files
+- WRITE DOCUMENTATION ON HOW THE CONFIG WORKS
+- ~~implement templating for every one of the frontend files~~
 - implement functionality to clear and clean cache
 - host this website on a demo page
-- implement ctl
 - implement autocomplete with a nice go backend and fast communication. Since it all runs locally nobody should have privacy concerns NEEDS TO BE ABLE TO TOGGLED OFF FOR DEMO PAGE
-
-WRITE DOCUMENTATION
